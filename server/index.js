@@ -2,14 +2,14 @@ require("dotenv").config();
 
 const path = require("path");
 const express = require("express");
-const cors = require("cors");
+/* const cors = require("cors"); */
 const { pool, init } = require("./db");
 
 const app = express();
 const port = process.env?.PORT || 3000;
 const rootDir = path.resolve(__dirname, "..");
 
-app.use(cors());
+/* app.use(cors()); */
 app.use(express.json());
 app.use(express.static(rootDir));
 
@@ -45,18 +45,15 @@ app.patch("/api/todos/:id", async (req, res) => {
   const { text, completed } = req.body;
   const updates = [];
   const values = [];
-  let valueIndex = 1;
 
   if (typeof text === "string") {
-    updates.push(`text = $${valueIndex}`);
+    updates.push(`text = $${updates.length + 1}`);
     values.push(text.trim());
-    valueIndex += 1;
   }
 
   if (typeof completed === "boolean") {
-    updates.push(`completed = $${valueIndex}`);
+    updates.push(`completed = $${updates.length + 1}`);
     values.push(completed);
-    valueIndex += 1;
   }
 
   if (updates.length === 0) {
@@ -64,12 +61,13 @@ app.patch("/api/todos/:id", async (req, res) => {
   }
 
   values.push(req.params.id);
+  const idIndex = updates.length + 1;
 
   try {
     const result = await pool.query(
       `UPDATE todos SET ${updates.join(
         ", "
-      )} WHERE id = $${valueIndex} RETURNING id, text, completed`,
+      )} WHERE id = $${idIndex} RETURNING id, text, completed`,
       values
     );
     if (result.rowCount === 0) {
