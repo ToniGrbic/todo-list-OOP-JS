@@ -1,82 +1,76 @@
-import {Todo} from './Todo.js'
-
 export class Storage {
+  static apiBase = "http://localhost:3000/api/todos";
 
-    static addStorageItem(text, id){
-       let Items = this.getLocalStorage()
-       let completed = false;
-       let todo = new Todo(text, id, completed)
-       Items.push(todo);
-       this.setLocalStorage(Items)
+  static async getDbTodos() {
+    const response = await fetch(this.apiBase);
+    if (!response.ok) {
+      throw new Error("Failed to load todos");
     }
-   
-    static delStorageItem(id){
-       let Items = this.getLocalStorage()
-       
-       Items = Items.filter((Item)=>{
-           if(Item.id !== id){
-               return Item
-           }
-       })
-       this.setLocalStorage(Items)
+    return response.json();
+  }
+
+  static async addDbTodo(text) {
+    const response = await fetch(this.apiBase, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to create todo");
     }
-   
-    static editLocalStorage(text, editID){
-       let Items = this.getLocalStorage()
-   
-       Items = Items.map((Item)=>{
-           if(Item.id === editID){
-               Item.text = text
-           }
-           return Item
-       })
-       this.setLocalStorage(Items)
+    return response.json();
+  }
+
+  static async editDbTodo(text, editID) {
+    const response = await fetch(`${this.apiBase}/${editID}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to edit todo");
     }
-   
-    static toggleCompletedLocalStorage(completed, id){
-       let Items = this.getLocalStorage()
-   
-       Items = Items.map((Item)=>{
-           if(Item.id === id){
-               Item.completed = completed
-           }
-           return Item
-       })
-       this.setLocalStorage(Items)
+    return response.json();
+  }
+
+  static async toggleCompletedDbTodo(completed, id) {
+    const response = await fetch(`${this.apiBase}/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to update todo");
     }
-   
-    static getLocalStorage(){
-       let Items
-       if(localStorage.getItem('Items') === null){
-           Items = [];
-       }else{
-           Items = JSON.parse(localStorage.getItem('Items'))
-       }
-       return Items
+    return response.json();
+  }
+
+  static async deleteDbTodo(id) {
+    const response = await fetch(`${this.apiBase}/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete todo");
     }
-   
-    static getStorageItem(id){
-       let Items = this.getLocalStorage()
-   
-       let [Item] = Items.filter((item) => {
-           if(item.id === id){
-               return item
-           }
-       })
-       return Item
+    return response.json();
+  }
+
+  static async clearDbTodos() {
+    const response = await fetch(this.apiBase, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Failed to clear todos");
     }
-   
-    static setLocalStorage(Items){
-       localStorage.setItem('Items', JSON.stringify(Items))
+    return response.json();
+  }
+
+  static async addDbTodosFromFile(fileItems) {
+    const filteredItems = fileItems
+      .map((fileItem) => fileItem.trim())
+      .filter((fileItem) => fileItem.length > 0);
+    for (const fileItem of filteredItems) {
+      await this.addDbTodo(fileItem);
     }
-   
-    static addToStorageFromFile(fileItems){
-       let i = 0;
-       fileItems.forEach((fileItem)=>{
-           const id = new Date().getTime() + i
-           this.addStorageItem(fileItem, id.toString()) 
-           i++
-       }) 
-    }
-   };
-   
+  }
+}

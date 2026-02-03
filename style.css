@@ -1,229 +1,235 @@
-:root{
-    --main-color:rgb(253, 152, 0);
+:root {
+  --main-color: rgb(253, 152, 0);
 }
 
-*{
-    font-family: 'Poppins';
+* {
+  font-family: "Poppins";
 }
 
-body{
-    background: linear-gradient(90deg, rgba(255,167,0,1) 0%, rgb(243, 224, 76) 100%);
+body {
+  background: linear-gradient(
+    0deg,
+    rgba(93, 128, 187, 1) 0%,
+    rgba(25, 42, 123, 1) 88%,
+    rgba(11, 25, 102, 1) 100%
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
 }
-.container{
-    width: 40%;
-    margin: 0 auto;
-    min-width:600px;
-}
-
-h1{
-    color:white;
-    text-align: center;
-}
-
-.alertDiv{
-    margin-bottom: 1rem;
-    height: 1.5rem;
-    display: grid;
-    align-items: center;
-    text-align: center;
-    font-size: 1rem;
-    border-radius: 0.25rem;
-    letter-spacing: 0.25rem;
-    text-transform: capitalize;
+.container {
+  width: 40%;
+  margin: 0 auto;
+  min-width: 600px;
 }
 
-label{
-    position: absolute;
+h1 {
+  color: white;
+  text-align: center;
+}
+
+.alertDiv {
+  margin-bottom: 1rem;
+  height: 1.5rem;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  letter-spacing: 0.25rem;
+  text-transform: capitalize;
+}
+
+label {
+  position: absolute;
 }
 
 .alert-danger {
-    color: #721c24;
-    background: #f8d7da;
-  }
+  color: #721c24;
+  background: #f8d7da;
+}
 .alert-success {
-    color: #155724;
-    background: #d4edda;
-  }
-
-input[type ='text']{
-    width: 70%;
-    margin: 0;
-    height: 35px;
-    border-color: white;
+  color: #155724;
+  background: #d4edda;
 }
 
-select{
-    height: 35px;
-    color: var(--main-color);
-    transition: 500ms;
+input[type="text"] {
+  width: 70%;
+  margin: 0;
+  height: 35px;
+  border-color: white;
 }
 
-.submitDiv{
-   display:flex;
+select {
+  height: 35px;
+  color: var(--main-color);
+  transition: 500ms;
 }
 
-#submit{
-    background-color: rgb(241, 173, 64);
-    border: none;
-    width: 100px;
-    position: relative;
-    right: 0.6%;
-    height:40px;
-    transition: 500ms;
+.submitDiv {
+  display: flex;
 }
 
-#submit:hover{
-    background-color: rgb(255, 117, 4);
+#submit {
+  background-color: rgb(241, 173, 64);
+  border: none;
+  width: 100px;
+  position: relative;
+  right: 0.6%;
+  height: 40px;
+  transition: 500ms;
 }
 
-#submit h3{
-    transition:500ms;
+#submit:hover {
+  background-color: rgb(255, 117, 4);
 }
 
-#submit:hover h3{
-    transform: translate(0px, -5px);
+#submit h3 {
+  transition: 500ms;
 }
 
-button:hover{
-    cursor: pointer;
+#submit:hover h3 {
+  transform: translate(0px, -5px);
 }
 
-.check-btn{
-  border:none;
+button:hover {
+  cursor: pointer;
+}
+
+.check-btn {
+  border: none;
   background-color: white;
-  margin-left:10px;
-  height:30px;
+  margin-left: 10px;
+  height: 30px;
 }
 
-.del-btn{
-    border:none;
-    background-color: white;
-    margin-left:10px;
-    height:30px;
+.del-btn {
+  border: none;
+  background-color: white;
+  margin-left: 10px;
+  height: 30px;
 }
 
-i{
-    margin-right:10px;
+i {
+  margin-right: 10px;
 }
 
-div i{
-    cursor: pointer;
-    text-decoration: none !important;
+div i {
+  cursor: pointer;
+  text-decoration: none !important;
 }
 
-.fa-edit{
-    height:18px;
+.fa-edit {
+  height: 18px;
 }
 
-.fa-check-square{
-    background: green;
+.fa-check-square {
+  background: green;
 }
 
-.fa-minus-square{
-    background: brown;
+.fa-minus-square {
+  background: brown;
 }
 
-.todoCompleted{
-    background: #d4edda !important; ;
-    text-decoration: line-through;
-    transition: 500ms;
-}  
+.todoCompleted {
+  background: #d4edda !important;
+  text-decoration: line-through;
+  transition: 500ms;
+}
 
-.todoDiv{
-    height: 60px;
-    background-color: white;
-    width: 85%;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px; 
-    display: flex;
-    justify-content: space-between;
-    width:85%;
+.todoDiv {
+  height: 60px;
+  background-color: white;
+  width: 85%;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
 }
 
 .show-container {
-    visibility:  visible !important; 
-  }
-
-.input-file{
-    width:120px;
-    height: 25px;
-    
-}
-.open-file{
-    display:none;
-    
-}
-.show-open-file{
-    display:block;
+  visibility: visible !important;
 }
 
-.file-options{
-    display: none;
+.input-file {
+  width: 120px;
+  height: 25px;
+}
+.open-file {
+  display: none;
+}
+.show-open-file {
+  display: block;
 }
 
-.show-file-options{
-    display: flex;
+.file-options {
+  display: none;
 }
 
-.fileChoice{
-    margin-top: 0;
-}
-.dropdown-menu{
-    text-align: center;
-    cursor:pointer;
-    background-color: rgb(243, 162, 11);
-    border:none;
-    margin-top: 10px;
-    font-size: 1.1rem;
-    border-radius: 0.3rem;
-    color: black;
-    padding: 0.5rem;
-    transition:500ms;
-}
-.dropdown-menu:hover{
-    background-color: rgb(255, 117, 4);
+.show-file-options {
+  display: flex;
 }
 
-.fileName{
-    display:none;
+.fileChoice {
+  margin-top: 0;
 }
-.show-fileName{
-    display:block;
+.dropdown-menu {
+  text-align: center;
+  cursor: pointer;
+  background-color: rgb(243, 162, 11);
+  border: none;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  border-radius: 0.3rem;
+  color: black;
+  padding: 0.5rem;
+  transition: 500ms;
 }
-.div-file-menu{
-    margin-bottom: 0.8rem;
+.dropdown-menu:hover {
+  background-color: rgb(255, 117, 4);
+}
+
+.fileName {
+  display: none;
+}
+.show-fileName {
+  display: block;
+}
+.div-file-menu {
+  margin-bottom: 0.8rem;
 }
 .clearBtn {
-    width: 85%;
-    text-align: center;
-    cursor:pointer;
-    background-color: rgb(243, 162, 11);
-    border:none;
-    margin-top: 10px;
-    font-size: 1.1rem;
-    border-radius: 0.3rem;
-    color: black;
-    padding: 0.5rem;
-    visibility: hidden;
-    transition:500ms;
+  width: 85%;
+  text-align: center;
+  cursor: pointer;
+  background-color: rgb(243, 162, 11);
+  border: none;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  border-radius: 0.3rem;
+  color: black;
+  padding: 0.5rem;
+  visibility: hidden;
+  transition: 500ms;
 }
 
-.file-options{
-    background-color: rgb(243, 162, 11);
-    width:50%;
-    border-radius: 0 0.3rem 0.3rem 0.3rem ;
+.file-options {
+  background-color: rgb(243, 162, 11);
+  width: 50%;
+  border-radius: 0 0.3rem 0.3rem 0.3rem;
 }
-.clearBtn:hover{
-   background-color: rgb(255, 117, 4);
-}
-
-li:hover{
-    background-color: rgb(255, 117, 4);
-    cursor: pointer;
-    
+.clearBtn:hover {
+  background-color: rgb(255, 117, 4);
 }
 
-ul{
-    width:100%;
+li:hover {
+  background-color: rgb(255, 117, 4);
+  cursor: pointer;
+}
+
+ul {
+  width: 100%;
 }

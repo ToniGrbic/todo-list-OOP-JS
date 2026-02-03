@@ -1,58 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo list</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/0fe232fab3.js" crossorigin="anonymous"></script>
-
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
     <div class="container">
       <h1>Todo List</h1>
       <div class="div-file-menu">
-          <button class="dropdown-menu">
-              File
-          </button>
-          
-          <div class="file-options">
-            <ul class="ul-file-options">
-                <li class="Save-as">Save as...</li>
-                <p class="fileName">filename:<input type="text" id="fileName"/>
-                    <button class="downloadButton">download file</button></p>
-                <li class="Open">Open...</li>
-                <div class="open-file">
-                    <input class="input-file" type="file">
-                    <p class="fileChoice">current file: none</p>
-                </div>  
-            </ul>
-          </div>
+        <button class="dropdown-menu">File</button>
+
+        <div class="file-options">
+          <ul class="ul-file-options">
+            <li class="Save-as">Save as...</li>
+            <p class="fileName">
+              filename:<input type="text" id="fileName" />
+              <button class="downloadButton">download file</button>
+            </p>
+            <li class="Open">Open...</li>
+            <div class="open-file">
+              <input class="input-file" type="file" />
+              <p class="fileChoice">current file: none</p>
+            </div>
+          </ul>
+        </div>
       </div>
-      
-      <div class="alertDiv">
-      </div>
+
+      <div class="alertDiv"></div>
       <form id="Form">
-          <div class="submitDiv">
-            <input type="text" name="" id="text-input" >
-            <button type="submit" id="submit" value="Submit"><h3>Submit</h3></button>
-          </div>
+        <div class="submitDiv">
+          <input type="text" name="" id="text-input" />
+          <button type="submit" id="submit" value="Submit">
+            <h3>Submit</h3>
+          </button>
+        </div>
       </form>
 
-          <select name="select" id="selectOption">
-              <option value="All">All</option>
-              <option value="Completed">Completed</option>
-              <option value="Uncompleted">Uncompleted</option>
-          </select>
-          <h3>Todos:</h3>
-          <div id="list" class="listDiv">
-              <!-- todos are added here-->
-          </div>
+      <select name="select" id="selectOption">
+        <option value="All">All</option>
+        <option value="Completed">Completed</option>
+        <option value="Uncompleted">Uncompleted</option>
+      </select>
+      <div id="list" class="listDiv">
+        <!-- todos are added here-->
+      </div>
 
-          <div class="clearBtn">clear todos</div>
-      
+      <div class="clearBtn">clear todos</div>
     </div>
     <script type="module" src="js/app.js"></script>
-</body>
+  </body>
 </html>
