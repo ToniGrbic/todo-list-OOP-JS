@@ -2,10 +2,10 @@
   "name": "todo-list-oop-js",
   "version": "1.0.0",
   "description": "This is a todo app that features CRUD operations and uses local storage to store data",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js",
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
     "seed": "node server/seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,0 +1,13 @@
+[2026-02-04T14:11:20.838Z] Database init failed: The argument 'encoding' is invalid encoding. Received 'uttf-8'
+TypeError [ERR_INVALID_ARG_VALUE]: The argument 'encoding' is invalid encoding. Received 'uttf-8'
+    at assertEncoding (node:internal/fs/utils:157:11)
+    at getOptions (node:internal/fs/utils:334:5)
+    at Object.readFile (node:internal/fs/promises:1229:13)
+    at init (C:\Users\tonig.TONI\OneDrive\Documents\Dev projects\WebDev\todo-list-OOP-JS\server\db.js:12:33)
+    at startServer (C:\Users\tonig.TONI\OneDrive\Documents\Dev projects\WebDev\todo-list-OOP-JS\server\index.js:106:9)
+    at Object.<anonymous> (C:\Users\tonig.TONI\OneDrive\Documents\Dev projects\WebDev\todo-list-OOP-JS\server\index.js:112:1)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+
