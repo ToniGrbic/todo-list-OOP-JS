@@ -1,4 +1,7 @@
-const { db } = require("../db/db");
+// const { db } = require("../db/db");
+// const { validateAndBuildUpdates } = require("../validators/todos");
+import { db } from "../db/db.js";
+import { validateAndBuildUpdates } from "../validators/todos.js";
 
 const getTodos = async (_req, res) => {
   try {
@@ -30,21 +33,18 @@ const createTodo = async (req, res) => {
 
 const updateTodo = async (req, res) => {
   const { text, completed } = req.body;
-  const updates = [];
-  const values = [];
 
-  if (typeof text === "string") {
-    updates.push(`text = $${updates.length + 1}`);
-    values.push(text.trim());
-  }
-
-  if (typeof completed === "boolean") {
-    updates.push(`completed = $${updates.length + 1}`);
-    values.push(completed);
-  }
+  const { updates, values, error } = validateAndBuildUpdates({
+    text,
+    completed,
+  });
 
   if (updates.length === 0) {
     return res.status(400).json({ error: "No fields to update" });
+  }
+
+  if (error) {
+    return res.status(400).json({ error });
   }
 
   values.push(req.params.id);
@@ -90,10 +90,11 @@ const clearTodos = async (_req, res) => {
   }
 };
 
-module.exports = {
-  getTodos,
-  createTodo,
-  updateTodo,
-  deleteTodo,
-  clearTodos,
-};
+// module.exports = {
+//   getTodos,
+//   createTodo,
+//   updateTodo,
+//   deleteTodo,
+//   clearTodos,
+// };
+export { clearTodos, createTodo, deleteTodo, getTodos, updateTodo };

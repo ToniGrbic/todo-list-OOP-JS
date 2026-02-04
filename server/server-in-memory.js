@@ -1,7 +1,13 @@
-require("dotenv").config();
+// require("dotenv").config();
+// const path = require("path");
+// const express = require("express");
+import "dotenv/config";
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const path = require("path");
-const express = require("express");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env?.PORT || 3000;

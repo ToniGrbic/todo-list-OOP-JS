@@ -1,6 +1,7 @@
-require("dotenv").config();
-
-const { Pool } = require("pg");
+// require("dotenv").config();
+// const { Pool } = require("pg");
+import "dotenv/config";
+import { Pool } from "pg";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -19,7 +20,7 @@ const seed = async () => {
       text TEXT NOT NULL,
       completed BOOLEAN NOT NULL DEFAULT FALSE,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    )`
+    )`,
   );
 
   await pool.query("DELETE FROM todos");
@@ -33,7 +34,7 @@ const seed = async () => {
 
   await pool.query(
     `INSERT INTO todos (text, completed) VALUES ${placeholders.join(", ")}`,
-    values
+    values,
   );
 };
 
