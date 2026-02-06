@@ -16,14 +16,14 @@ import {
 
 import { Storage } from "./Storage.js";
 import { Todo } from "./Todo.js";
-import { editElement, editFlag, editID, UI } from "./UI.js";
+import { UI } from "./UI.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
   const ui = new UI();
   await ui.getItems();
 
   dropdownMenu.addEventListener("click", function (e) {
-    UI.toggleFileMenu();
+    ui.toggleFileMenu();
   });
 
   fileOptions.addEventListener("click", function (e) {
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         text = (await todos).map((todo) => todo.text).join("\n");
         text = "Todos:\n" + text;
         let fileName = fileNameInput.value;
-        UI.downloadFile(fileName, text);
+        ui.downloadFile(fileName, text);
         fileNameInput.value = "";
       });
     } else if (e.target.classList.contains("Open")) {
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           let todos = await Storage.getDbTodos();
           if (todos.length != 0) {
-            await UI.clearTodos();
+            await ui.clearTodos();
           }
           const reader = new FileReader();
           reader.readAsText(inputFile.files[0]);
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             UI.displayAlert("list opened from file", "success");
           };
         },
-        false
+        false,
       );
     }
   });
@@ -70,22 +70,29 @@ document.addEventListener("DOMContentLoaded", async function () {
     e.preventDefault();
     const input_text = textInput.value;
     //different submit cases
-    if (input_text && !editFlag) {
-      const createdTodo = await Storage.addDbTodo(input_text);
-      const todo = new Todo(
-        createdTodo.text,
-        createdTodo.id,
-        createdTodo.completed
-      );
-      ui.appendTodo(todo);
-      clearBtn.classList.add("show-container");
-      UI.displayAlert("todo added!", "success");
-      UI.setToDefault();
-    } else if (input_text && editFlag) {
-      editElement.innerHTML = input_text;
+    if (input_text && !ui.editFlag) {
+      try {
+        const createdTodo = await Storage.addDbTodo(input_text);
+        const todo = new Todo(
+          createdTodo.text,
+          createdTodo.id,
+          createdTodo.completed,
+        );
+        ui.appendTodo(todo);
+        clearBtn.classList.add("show-container");
+        UI.displayAlert("todo added!", "success");
+        ui.setToDefault();
+      } catch (error) {
+        UI.displayAlert(
+          "Failed to add todo, please try again later.",
+          "danger",
+        );
+      }
+    } else if (input_text && ui.editFlag) {
+      ui.editElement.innerHTML = input_text;
       UI.displayAlert("todo edited!", "success");
-      await Storage.updateDbTodo(editID, { text: input_text });
-      UI.setToDefault();
+      await Storage.updateDbTodo(ui.editID, { text: input_text });
+      ui.setToDefault();
     } else {
       UI.displayAlert("please submit a todo!", "danger");
     }
@@ -120,8 +127,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     e.preventDefault();
 
     if (confirm("Are you sure?")) {
-      await UI.clearTodos();
-      UI.setToDefault();
+      await ui.clearTodos();
+      ui.setToDefault();
       UI.displayAlert("todos removed!", "success");
     }
   });

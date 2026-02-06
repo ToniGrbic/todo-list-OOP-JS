@@ -9,71 +9,81 @@ import {
 import { Storage } from "./Storage.js";
 import { Todo } from "./Todo.js";
 
-let completed = false;
-let editFlag = false;
-let editID = "";
-let editElement = "";
-
 export class UI {
-  static async checkItem(btn) {
-    let todo = btn.parentElement.parentElement;
-    const id = todo.dataset.id;
-    if (!todo.classList.contains("todoCompleted")) {
-      todo.classList.add("todoCompleted");
-      completed = true;
-      this.displayAlert("todo completed!", "success");
-    } else {
-      todo.classList.remove("todoCompleted");
-      completed = false;
-      this.displayAlert("todo uncompleted!", "danger");
-    }
-    await Storage.updateDbTodo(id, { completed });
-    this.setToDefault();
+  constructor() {
+    this.completed = false;
+    this.editFlag = false;
+    this.editID = "";
+    this.editElement = "";
   }
 
-  static async deleteItem(btn) {
-    let todo = btn.parentElement.parentElement;
-    const id = todo.dataset.id;
-    todo.remove();
-    this.displayAlert("todo deleted!", "danger");
-    await Storage.deleteDbTodo(id);
-    this.setToDefault();
+  async checkItem(btn) {
+    try {
+      const todo = btn.parentElement.parentElement;
+      const id = todo.dataset.id;
 
-    if (listDiv.children.length === 0) {
-      clearBtn.classList.remove("show-container");
+      if (!todo.classList.contains("todoCompleted")) {
+        todo.classList.add("todoCompleted");
+        this.completed = true;
+        UI.displayAlert("todo completed!", "success");
+      } else {
+        todo.classList.remove("todoCompleted");
+        this.completed = false;
+        UI.displayAlert("todo uncompleted!", "danger");
+      }
+
+      await Storage.updateDbTodo(id, { completed: this.completed });
+      this.setToDefault();
+    } catch (error) {
+      console.error("Failed to update todo:", error);
+      UI.displayAlert(
+        "Failed to update todo, please try again later.",
+        "danger",
+      );
     }
   }
 
-  static editItem(btn) {
-    editElement = btn.nextElementSibling;
+  async deleteItem(btn) {
+    try {
+      const todo = btn.parentElement.parentElement;
+      const id = todo.dataset.id;
+      await Storage.deleteDbTodo(id);
+      todo.remove();
+      UI.displayAlert("todo deleted!", "danger");
+
+      this.setToDefault();
+
+      if (listDiv.children.length === 0) {
+        clearBtn.classList.remove("show-container");
+      }
+    } catch (error) {
+      UI.displayAlert(
+        "Failed to delete todo, please try again later.",
+        "danger",
+      );
+    }
+  }
+
+  editItem(btn) {
+    this.editElement = btn.nextElementSibling;
     const element = btn.parentElement;
 
-    editFlag = true;
+    this.editFlag = true;
 
-    if (element.classList.contains("todoCompleted") && editFlag) {
-      this.displayAlert("cannot edit a completed todo!", "danger");
+    if (element.classList.contains("todoCompleted") && this.editFlag) {
+      UI.displayAlert("cannot edit a completed todo!", "danger");
     } else {
-      textInput.value = editElement.innerHTML;
+      textInput.value = this.editElement.innerHTML;
       submitText.innerText = "Edit";
-      editID = element.dataset.id;
+      this.editID = element.dataset.id;
     }
   }
 
-  static displayAlert(text, action) {
-    alertDiv.innerText = text;
-    alertDiv.classList.add(`alert-${action}`);
-
-    setTimeout(function () {
-      alertDiv.innerText = "";
-      alertDiv.classList.remove(`alert-${action}`);
-    }, 1000);
-  }
-
-  static setToDefault() {
+  setToDefault() {
     textInput.value = "";
-    editID = "";
-    editFlag = false;
-    completed = false;
+    this.editID = "";
+    this.editFlag = false;
+    this.completed = false;
     submitText.innerText = "Submit";
   }
 
@@ -82,10 +92,10 @@ export class UI {
   }
 
   static downloadFile(filename, text) {
-    let element = document.createElement("a");
+    const element = document.createElement("a");
     element.setAttribute(
       "href",
-      "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+      "data:text/plain;charset=utf-8," + encodeURIComponent(text),
     );
     element.setAttribute("download", filename);
 
@@ -97,12 +107,19 @@ export class UI {
   }
 
   static async clearTodos() {
-    await Storage.clearDbTodos();
-    const todos = listDiv.querySelectorAll(".todoDiv");
-    todos.forEach(function (todo) {
-      listDiv.removeChild(todo);
-    });
-    clearBtn.classList.remove("show-container");
+    try {
+      await Storage.clearDbTodos();
+      const todos = listDiv.querySelectorAll(".todoDiv");
+      todos.forEach(function (todo) {
+        listDiv.removeChild(todo);
+      });
+      clearBtn.classList.remove("show-container");
+    } catch (error) {
+      UI.displayAlert(
+        "Failed to clear todos, please try again later.",
+        "danger",
+      );
+    }
   }
 
   appendTodo(todo) {
@@ -118,14 +135,14 @@ export class UI {
                            <div><i class="fas fa-check-square fa-2x check-btn"></i>
                               <i class="fas fa-minus-square fa-2x del-btn"></i></div>`;
 
-    itemDiv.addEventListener("click", function (e) {
+    itemDiv.addEventListener("click", (e) => {
       const el = e.target;
       if (el.classList.contains("edit-btn")) {
-        UI.editItem(el);
+        this.editItem(el);
       } else if (el.classList.contains("check-btn")) {
-        UI.checkItem(el);
+        this.checkItem(el);
       } else if (el.classList.contains("del-btn")) {
-        UI.deleteItem(el);
+        this.deleteItem(el);
       }
     });
 
@@ -135,17 +152,30 @@ export class UI {
   }
 
   async getItems() {
-    let Items = await Storage.getDbTodos();
+    try {
+      const items = await Storage.getDbTodos();
 
-    Items.forEach((Item) => {
-      const text = Item.text;
-      const id = Item.id;
-      const completed = Item.completed;
-      const todo = new Todo(text, id, completed);
-      this.appendTodo(todo);
-    });
-    if (Items.length > 0) clearBtn.classList.add("show-container");
+      items.forEach((item) => {
+        const text = item.text;
+        const id = item.id;
+        const completed = item.completed;
+        const todo = new Todo(text, id, completed);
+        this.appendTodo(todo);
+      });
+      if (items.length > 0) clearBtn.classList.add("show-container");
+    } catch (error) {
+      console.error("Failed to load todos:", error);
+      UI.displayAlert("Cannot load todos, please try again later.", "danger");
+    }
+  }
+
+  static displayAlert(text, action) {
+    alertDiv.innerText = text;
+    alertDiv.classList.add(`alert-${action}`);
+
+    setTimeout(function () {
+      alertDiv.innerText = "";
+      alertDiv.classList.remove(`alert-${action}`);
+    }, 1000);
   }
 }
-
-export { completed, editElement, editFlag, editID };

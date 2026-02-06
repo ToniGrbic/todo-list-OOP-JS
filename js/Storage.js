@@ -57,8 +57,8 @@ export class Storage {
     const filteredItems = fileItems
       .map((fileItem) => fileItem.trim())
       .filter((fileItem) => fileItem.length > 0);
-    for (const fileItem of filteredItems) {
-      await this.addDbTodo(fileItem);
-    }
+
+    const requests = filteredItems.map((fileItem) => this.addDbTodo(fileItem));
+    await Promise.all(requests);
   }
 }
