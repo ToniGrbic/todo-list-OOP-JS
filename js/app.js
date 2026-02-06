@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           let todos = await Storage.getDbTodos();
           if (todos.length != 0) {
-            await ui.clearTodos();
+            await UI.clearTodos();
           }
           const reader = new FileReader();
           reader.readAsText(inputFile.files[0]);
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     e.preventDefault();
 
     if (confirm("Are you sure?")) {
-      await ui.clearTodos();
+      await UI.clearTodos();
       ui.setToDefault();
       UI.displayAlert("todos removed!", "success");
     }
