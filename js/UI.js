@@ -1,3 +1,4 @@
+import { Storage } from "./api.js";
 import {
   alertDiv,
   clearBtn,
@@ -5,9 +6,8 @@ import {
   listDiv,
   submitText,
   textInput,
-} from "./DOM_elements.js";
-import { Storage } from "./Storage.js";
-import { Todo } from "./Todo.js";
+} from "./domElements.js";
+import { Todo } from "./todo.js";
 
 export class UI {
   constructor() {
@@ -39,6 +39,7 @@ export class UI {
       UI.displayAlert(
         "Failed to update todo, please try again later.",
         "danger",
+        2000,
       );
     }
   }
@@ -60,6 +61,7 @@ export class UI {
       UI.displayAlert(
         "Failed to delete todo, please try again later.",
         "danger",
+        2000,
       );
     }
   }
@@ -118,6 +120,7 @@ export class UI {
       UI.displayAlert(
         "Failed to clear todos, please try again later.",
         "danger",
+        2000,
       );
     }
   }
@@ -164,18 +167,21 @@ export class UI {
       });
       if (items.length > 0) clearBtn.classList.add("show-container");
     } catch (error) {
-      console.error("Failed to load todos:", error);
-      UI.displayAlert("Cannot load todos, please try again later.", "danger");
+      UI.displayAlert(
+        "Cannot load todos, please try again later.",
+        "danger",
+        2000,
+      );
     }
   }
 
-  static displayAlert(text, action) {
+  static displayAlert(text, action, timeout = 1000) {
     alertDiv.innerText = text;
     alertDiv.classList.add(`alert-${action}`);
 
     setTimeout(function () {
       alertDiv.innerText = "";
       alertDiv.classList.remove(`alert-${action}`);
-    }, 1000);
+    }, timeout);
   }
 }

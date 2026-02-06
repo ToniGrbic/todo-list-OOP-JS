@@ -12,10 +12,10 @@ import {
   options,
   submit,
   textInput,
-} from "./DOM_elements.js";
+} from "./domElements.js";
 
-import { Storage } from "./Storage.js";
-import { Todo } from "./Todo.js";
+import { Storage } from "./api.js";
+import { Todo } from "./todo.js";
 import { UI } from "./UI.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
