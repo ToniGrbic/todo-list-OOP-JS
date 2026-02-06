@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   await ui.getItems();
 
   dropdownMenu.addEventListener("click", function (e) {
-    ui.toggleFileMenu();
+    UI.toggleFileMenu();
   });
 
   fileOptions.addEventListener("click", function (e) {
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         text = (await todos).map((todo) => todo.text).join("\n");
         text = "Todos:\n" + text;
         let fileName = fileNameInput.value;
-        ui.downloadFile(fileName, text);
+        UI.downloadFile(fileName, text);
         fileNameInput.value = "";
       });
     } else if (e.target.classList.contains("Open")) {
