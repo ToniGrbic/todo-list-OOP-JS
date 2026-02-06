@@ -21,23 +21,11 @@ export class Storage {
     return response.json();
   }
 
-  static async editDbTodo(text, editID) {
-    const response = await fetch(`${this.apiBase}/${editID}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
-    });
-    if (!response.ok) {
-      throw new Error("Failed to edit todo");
-    }
-    return response.json();
-  }
-
-  static async toggleCompletedDbTodo(completed, id) {
+  static async updateDbTodo(id, updates) {
     const response = await fetch(`${this.apiBase}/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ completed }),
+      body: JSON.stringify(updates),
     });
     if (!response.ok) {
       throw new Error("Failed to update todo");

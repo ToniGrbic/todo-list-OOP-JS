@@ -27,7 +27,7 @@ export class UI {
       completed = false;
       this.displayAlert("todo uncompleted!", "danger");
     }
-    await Storage.toggleCompletedDbTodo(completed, id);
+    await Storage.updateDbTodo(id, { completed });
     this.setToDefault();
   }
 

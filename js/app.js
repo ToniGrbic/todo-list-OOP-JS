@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     } else if (input_text && editFlag) {
       editElement.innerHTML = input_text;
       UI.displayAlert("todo edited!", "success");
-      await Storage.editDbTodo(input_text, editID);
+      await Storage.updateDbTodo(editID, { text: input_text });
       UI.setToDefault();
     } else {
       UI.displayAlert("please submit a todo!", "danger");
