@@ -1,6 +1,6 @@
 # Todo app
 
-Vanila JS + NodeJS backend todo list app
+Vanila JS + NodeJS backend todo list app updated
 
 # Setup
 
